@@ -7,3 +7,11 @@ Application wil display a table with the following information -
 
 
 All the information is against github.com
+
+
+To build the solution open cmd in admin mode
+set Bld_Configuration=Release
+
+Execute Radius.UI\BuildFiles\Rebuild.cmd
+
+you can later deply it to IIS

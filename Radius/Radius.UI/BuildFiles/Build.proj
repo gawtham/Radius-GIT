@@ -1,0 +1,41 @@
+<Project 
+  DefaultTargets="Rebuild"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+  ToolsVersion="4.0">
+
+
+  <PropertyGroup>
+    <ProjectName>Radius.UI</ProjectName>
+    <ProjectFile>$(MSBuildProjectDirectory)\..\$(ProjectName).csproj</ProjectFile>
+  </PropertyGroup>
+  
+  <!-- Default the KBld_Configuration to Release. -->
+  <PropertyGroup Condition="'$(Bld_Configuration)'==''">
+    <Bld_Configuration>Release</Bld_Configuration>
+  </PropertyGroup>
+
+  <!-- Set the IISPackageLocation depending on whether we have a KBld_OutputDir set. -->
+  <PropertyGroup Condition="'$(KBld_OutputDir)'==''">
+    <IISPackageLocation>$(MSBuildProjectDirectory)\..\BuildPackages\$(ProjectName).zip</IISPackageLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(KBld_OutputDir)'!=''">
+    <IISPackageLocation>D:\Radius\Radius-GIT\Radius\Out\Customer\$(ProjectName).zip</IISPackageLocation>
+  </PropertyGroup>
+
+  <Target Name="Rebuild">
+    <MSBuild
+      Projects="$(ProjectFile)"
+      Properties="PackageLocation=$(IISPackageLocation);Configuration=$(Bld_Configuration);CreatePackageOnPublish=true;DeployOnBuild=true"
+      Targets="Rebuild"
+      />
+    <Message Text="The IIS package has been created as '$(IISPackageLocation)'." Importance="high" />
+  </Target>
+
+  <Target Name="Clean">
+    <MSBuild
+      Projects="$(ProjectFile)"
+      Properties="PackageLocation=$(IISPackageLocation);Configuration=$(Bld_Configuration);CreatePackageOnPublish=true;DeployOnBuild=true"
+      Targets="Clean"
+      />
+  </Target>
+</Project>
