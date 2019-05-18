@@ -186,6 +186,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\proj.png" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -194,7 +195,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="BuildFiles\Build.options" />
-    <Content Include="BuildFiles\Build.proj" />
+    <Content Include="BuildFiles\Build.proj">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="BuildFiles\findbuilderrors.cmd" />
     <Content Include="BuildFiles\Rebuild.cmd" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
