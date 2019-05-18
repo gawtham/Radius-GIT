@@ -1,0 +1,121 @@
+﻿
+<div class="ibox">
+    <div class="ibox-title">
+        <h5>IMPORTANT</h5>
+    </div>
+    <div class="ibox-content">
+        <div>
+            <ul>
+                <li>
+                    searh text can be any of the following
+                    <ul>
+                        <li><b>ex: </b>https://github.com/praeclarum/sqlite-net</li>
+                        <li><b>ex: </b>https://github.com/praeclarum/sqlite-net.git</li>
+                        <li><b>ex: </b>praeclarum/sqlite-net</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="ibox">
+    <div class="ibox-title">
+        <div class="row">
+            <div class="col-lg-5">
+                <h4>GIT STATUS</h4>
+            </div>
+            <div class="col-lg-7 text-right">
+                <form class="form-inline" role="form" id="searchForm">
+                    <input class="form-control w-300" type="text" id="searchTab"/>
+                    <button class="btn btn-success">
+                        SEARCH
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="ibox-content" id="displayArea">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="b-r">Duration</th>
+                    <th class="text-center">Issue Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="b-r">Issues opened in last 24 hours</td>
+                    <td id="last24" class="text-center">-</td>
+                </tr>
+                <tr>
+                    <td class="b-r">Issues open between last 24 hours to last 7days</td>
+                    <td id="last24To7" class="text-center">-</td>
+                </tr>
+                <tr>
+                    <td class="b-r">Issues older than 7 days</td>
+                    <td id="beyond7" class="text-center ">-</td>
+                </tr>
+                <tr>
+                    <td class="b-r">Total oppen Issues</td>
+                    <td id="total" class="text-center">-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    function getValue(link, id) {
+        $('#' + id).html(spinner());
+        $.get(link, function (data, status) {
+            if(data.hasOwnProperty('total_count')){
+                $('#' + id).html(data.total_count);
+            } else {
+                $('#' + id).html(0);
+            }
+        });
+    }
+    $("form#searchForm").submit(function (e) {
+        e.preventDefault();
+        var searchText = $('#searchTab').val();
+        $.ajax({
+            url: '@Url.Action("GitTableSettings", "Status")',
+            type: 'POST',
+            data: JSON.stringify(searchText),
+            dataType: 'json',
+            success: function (result) {
+                getValue(result.toalIssueCountQuery, 'total');
+                getValue(result.issuesCountInLast24HrsQuery, 'last24');
+                getValue(result.issuesCountBtwn24HrsTo7DaysQuery, 'last24To7');
+                getValue(result.issuesCountAfter7DaysQuery, 'beyond7');
+            },
+            error: function () {
+                alert("Internal Error");
+            }
+        });
+    });
+
+    // This is just to help the user understand that search is running
+    function spinner(){
+        var base = '<div class="sk-spinner sk-spinner-circle">';
+        base += '<div class="sk-circle1 sk-circle"></div>';
+        base += '<div class="sk-circle2 sk-circle"></div>';
+        base += '<div class="sk-circle3 sk-circle"></div>';
+        base += '<div class="sk-circle4 sk-circle"></div>';
+        base += '<div class="sk-circle5 sk-circle"></div>';
+        base += '<div class="sk-circle6 sk-circle"></div>';
+        base += '<div class="sk-circle7 sk-circle"></div>';
+        base += '<div class="sk-circle8 sk-circle"></div>';
+        base += ' <div class="sk-circle9 sk-circle"></div>';
+        base += '<div class="sk-circle10 sk-circle"></div>';
+        base += ' <div class="sk-circle11 sk-circle"></div>';
+        base += '<div class="sk-circle12 sk-circle"></div>';
+        base += '</div>';
+
+        return base;
+    }
+</script>
+
+
