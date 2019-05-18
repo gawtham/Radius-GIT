@@ -69,10 +69,18 @@
 <script>
     function getValue(link, id) {
         $('#' + id).html(spinner());
-        $.get(link, function (data, status) {
-            if(data.hasOwnProperty('total_count')){
-                $('#' + id).html(data.total_count);
-            } else {
+        $.ajax({
+            url: link,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.hasOwnProperty('total_count')) {
+                    $('#' + id).html(data.total_count);
+                } else {
+                    $('#' + id).html(0);
+                }
+            },
+            error: function () {
                 $('#' + id).html(0);
             }
         });
