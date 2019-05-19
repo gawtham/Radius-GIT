@@ -10,8 +10,9 @@ All the information is against github.com
 
 
 To build the solution open cmd in admin mode
+add msbuild.exe to System path 
 set Bld_Configuration=Release
 
 Execute Radius.UI\BuildFiles\Rebuild.cmd
 
-you can later deply it to IIS
+you can later deploy it to IIS
