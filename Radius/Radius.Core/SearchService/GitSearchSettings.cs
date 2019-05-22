@@ -36,7 +36,7 @@ namespace Radius.Core.SearchService
         public override string AfterQuery(DateTime time)
         {
             var date = string.Format("{0}-{1}-{2}T{3}:{4}:{5}Z", time.Year, withPrefix(time.Month), withPrefix(time.Day), withPrefix(time.Hour), withPrefix(time.Minute), withPrefix(time.Second));
-            var res = string.Format("q=created:>{0}+state:open+repo:{1}", date, RepoName);
+            var res = string.Format("q=created:>{0}+state:open+type:issue+repo:{1}", date, RepoName);
             return linkPrefix + res;
         }
 
@@ -48,7 +48,7 @@ namespace Radius.Core.SearchService
         public override string BeforeQuery(DateTime time)
         {
             var date = string.Format("{0}-{1}-{2}T{3}:{4}:{5}Z", time.Year, withPrefix(time.Month), withPrefix(time.Day), withPrefix(time.Hour), withPrefix(time.Minute), withPrefix(time.Second));
-            var res = string.Format("q=created:<{0}+state:open+repo:{1}", date, RepoName);
+            var res = string.Format("q=created:<{0}+state:open+type:issue+repo:{1}", date, RepoName);
             return linkPrefix + res;
         }
 
@@ -64,7 +64,7 @@ namespace Radius.Core.SearchService
                 withPrefix(start.Hour), withPrefix(start.Minute), withPrefix(start.Second));
             var endDate = string.Format("{0}-{1}-{2}T{3}:{4}:{5}Z", end.Year, withPrefix(end.Month), withPrefix(end.Day), 
                 withPrefix(end.Hour), withPrefix(end.Minute), withPrefix(end.Second));
-            var res = string.Format("q=created:{0}..{1}+state:open+repo:{2}", startDate, endDate, RepoName);
+            var res = string.Format("q=created:{0}..{1}+state:open+type:issue+repo:{2}", startDate, endDate, RepoName);
             return linkPrefix + res;
         }
 
@@ -74,7 +74,7 @@ namespace Radius.Core.SearchService
         /// <returns></returns>
         public override string ToalIssueCountQuery()
         {
-            var res = string.Format("q=state:open+repo:{0}", RepoName);
+            var res = string.Format("q=state:open+type:issue+repo:{0}", RepoName);
             return linkPrefix + res;
         }
 
